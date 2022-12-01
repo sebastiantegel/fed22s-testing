@@ -1,12 +1,28 @@
 import { IBusInfo } from "./../models/IBusInfo";
 import { getBusInfo } from "../services/busService";
 
-jest.mock("./../services/busService.ts");
+let mockData: IBusInfo[] = [
+  { bus: 524, time: "07:30" },
+  { bus: 824, time: "08:30" },
+  { bus: 4, time: "08:00" },
+  { bus: 2, time: "23:59" },
+];
+
+jest.mock("axios", () => ({
+  get: async () => {
+    return new Promise((resolve, reject) => {
+      reject({
+        data: "Ingenting finns här",
+      });
+    });
+  },
+}));
 
 test("should get mock data", async () => {
-  let busInfo: IBusInfo[] = await getBusInfo();
-
-  expect(busInfo.length).toBeGreaterThan(0);
-  expect(busInfo.length).toBe(5);
-  expect(busInfo[0].bus).toBe(117);
+  let busInfo: IBusInfo[] = [{ bus: 117, time: "" }];
+  try {
+    busInfo = await getBusInfo();
+  } catch (response: any) {
+    expect(response.data).toBe("Ingenting finns här");
+  }
 });
