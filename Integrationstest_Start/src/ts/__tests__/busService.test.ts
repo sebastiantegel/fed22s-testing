@@ -9,11 +9,15 @@ let mockData: IBusInfo[] = [
 ];
 
 jest.mock("axios", () => ({
-  get: async () => {
+  get: async (url: string) => {
     return new Promise((resolve, reject) => {
-      reject({
-        data: "Ingenting finns här",
-      });
+      if (url.endsWith("hej")) {
+        resolve(mockData);
+      } else {
+        reject({
+          data: "Ingenting finns här",
+        });
+      }
     });
   },
 }));
@@ -21,7 +25,7 @@ jest.mock("axios", () => ({
 test("should get mock data", async () => {
   let busInfo: IBusInfo[] = [{ bus: 117, time: "" }];
   try {
-    busInfo = await getBusInfo();
+    busInfo = await getBusInfo("hej");
   } catch (response: any) {
     expect(response.data).toBe("Ingenting finns här");
   }

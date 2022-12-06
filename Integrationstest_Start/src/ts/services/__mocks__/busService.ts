@@ -8,7 +8,7 @@ let mockData: IBusInfo[] = [
   { bus: 117, time: "07:45" },
 ];
 
-export const getBusInfo = async (): Promise<IBusInfo[]> => {
+export const getBusInfo = async (url: string): Promise<IBusInfo[]> => {
   return new Promise((resolve) => {
     resolve(mockData);
   });

@@ -1,7 +1,7 @@
 import { getBusInfo } from "./services/busService";
 
 export const init = async () => {
-  let busInfos = await getBusInfo();
+  let busInfos = await getBusInfo("117");
 
   for (let i = 0; i < busInfos.length; i++) {
     let container = document.createElement("div");
