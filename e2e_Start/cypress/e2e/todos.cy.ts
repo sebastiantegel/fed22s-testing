@@ -1,6 +1,10 @@
+beforeEach(() => {
+  cy.visit("/");
+});
+
 describe("testing todo application", () => {
   it("should show title", () => {
-    cy.visit("http://localhost:1234");
+    // cy.visit("http://localhost:1234");
 
     cy.get("h2").contains("todo");
   });
